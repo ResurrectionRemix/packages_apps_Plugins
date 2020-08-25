@@ -4,6 +4,7 @@ android_app {
 
     static_libs: [
         "VolumePluginCommon",
+        "org.lineageos.platform.internal",
     ],
 
     resource_dirs: ["res"],

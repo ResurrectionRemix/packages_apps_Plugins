@@ -2,7 +2,10 @@ android_app {
 
     name: "CompactPanel",
 
-    static_libs: ["VolumePluginCommon"],
+    static_libs: [
+        "VolumePluginCommon",
+        "org.lineageos.platform.internal",
+    ],
 
     resource_dirs: ["res"],
 
