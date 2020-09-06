@@ -1716,9 +1716,13 @@ public class VolumeDialogImpl implements VolumeDialog {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (mRow.ss == null) return;
             if (D.BUG) Log.d(TAG, AudioSystem.streamToString(mRow.stream)
                     + " onProgressChanged " + progress + " fromUser=" + fromUser);
+           if (mRow.isAppVolumeRow) {
+                mController.getAudioManager().setAppVolume(mRow.packageName, progress * 0.01f);
+                return;
+            }
+            if (mRow.ss == null) return;
             if (!fromUser) return;
             if (mRow.ss.levelMin > 0) {
                 final int minProgress = mRow.ss.levelMin * 100;
@@ -1742,15 +1746,17 @@ public class VolumeDialogImpl implements VolumeDialog {
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
+            mRow.tracking = true;
+            if (mRow.isAppVolumeRow) return;
             if (D.BUG) Log.d(TAG, "onStartTrackingTouch"+ " " + mRow.stream);
             mController.setActiveStream(mRow.stream);
-            mRow.tracking = true;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             if (D.BUG) Log.d(TAG, "onStopTrackingTouch"+ " " + mRow.stream);
             mRow.tracking = false;
+            if (mRow.isAppVolumeRow) return;
             mRow.userAttempt = SystemClock.uptimeMillis();
             final int userLevel = getImpliedLevel(seekBar, seekBar.getProgress());
             Events.writeEvent(mContext, Events.EVENT_TOUCH_LEVEL_DONE, mRow.stream, userLevel);
@@ -1805,6 +1811,10 @@ public class VolumeDialogImpl implements VolumeDialog {
         private int animTargetProgress;
         private int lastAudibleLevel = 2;
         private FrameLayout dndIcon;
+        /* for change app's volume */
+        private String packageName;
+        private boolean isAppVolumeRow = false;
+        private boolean appMuted;
     }
 
     private static class StreamSwitchButton {
