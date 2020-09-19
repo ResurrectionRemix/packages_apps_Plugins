@@ -366,7 +366,7 @@ public class VolumeDialogImpl implements VolumeDialog {
                 addRow(AudioManager.STREAM_NOTIFICATION,
                         mSysUIR.drawable("ic_volume_notification"), mSysUIR.drawable("ic_volume_notification_mute"), true, false);
                 addRow(STREAM_ALARM,
-                        mSysUIR.drawable("ic_alarm"), mSysUIR.drawable("ic_volume_alarm_mute"), true, false);
+                        mSysUIR.drawable("ic_volume_alarm"), mSysUIR.drawable("ic_volume_alarm_mute"), true, false);
                 addRow(AudioManager.STREAM_VOICE_CALL,
                         com.android.internal.R.drawable.ic_phone,
                         com.android.internal.R.drawable.ic_phone, false, false);
