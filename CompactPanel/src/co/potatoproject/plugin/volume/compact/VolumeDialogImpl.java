@@ -200,6 +200,7 @@ public class VolumeDialogImpl implements VolumeDialog {
     private boolean isAlarmShowing = false;
     private boolean isVoiceShowing = false;
     private boolean isBTSCOShowing = false;
+    private int mAnimation;
     private int mTimeout;
     private boolean mAppVolume;
     public VolumeDialogImpl() {}
@@ -261,7 +262,7 @@ public class VolumeDialogImpl implements VolumeDialog {
                 | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
         mWindowParams.type = WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
-        mWindowParams.windowAnimations = -1;
+        updateAnimations();
         mDialog = LayoutInflater.from(mContext).inflate(R.layout.volume_dialog_compact,
                         (ViewGroup) null, false);
         
@@ -404,6 +405,7 @@ public class VolumeDialogImpl implements VolumeDialog {
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.SHOW_RINGER_VOLUME_PANEL), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_TIMEOUT), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.SHOW_APP_VOLUME), false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.VOLUME_PANEL_ANIMATION), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -424,7 +426,49 @@ public class VolumeDialogImpl implements VolumeDialog {
              mTimeout = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_TIMEOUT, 3, UserHandle.USER_CURRENT) * 1000;
              mVolumePanelOnLeft = LineageSettings.Secure.getIntForUser(mContext.getContentResolver(), LineageSettings.Secure.VOLUME_PANEL_ON_LEFT, 0, UserHandle.USER_CURRENT) == 0;
              mAppVolume = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.SHOW_APP_VOLUME, 0, UserHandle.USER_CURRENT) == 1;
+             mAnimation = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.VOLUME_PANEL_ANIMATION, 11, UserHandle.USER_CURRENT);
             // updateRowsH(getActiveRow());
+        }
+    }
+
+    private void updateAnimations() {
+        switch (mAnimation) {
+           case 0:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationEnter;
+           break;
+           case 1:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimation;
+           break;
+           case 2:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationTop;
+           break;
+           case 3:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationFly;
+           break;
+           case 4:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationTn;
+           break;
+           case 5:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationTranslucent;
+           break;
+           case 6:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationXylon;
+           break;
+           case 7:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationCard;
+           break;
+           case 8:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationTranslucent;
+           break;
+           case 9:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationTranslucent;
+           break;
+           case 10:
+              mWindowParams.windowAnimations = com.android.internal.R.style.GlobalActionsAnimationRotate;
+           default:
+           case 11:
+            mWindowParams.windowAnimations = -1;
+           break;
         }
     }
 
