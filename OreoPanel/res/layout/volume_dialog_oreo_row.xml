@@ -48,6 +48,7 @@
             android:visibility="gone"
             android:layout_width="@dimen/volume_dialog_app_size"
             android:layout_height="@dimen/volume_dialog_app_size"
+            android:paddingStart="@dimen/volume_row_app_icon_padding"
             android:background="@drawable/ripple_drawable_20dp"
             android:soundEffectsEnabled="false"
             android:scaleType="centerInside" />
