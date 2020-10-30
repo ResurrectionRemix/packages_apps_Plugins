@@ -2,7 +2,6 @@
      Copyright (C) 2015 The Android Open Source Project
      Copyright (C) 2020 The Potato Open Sauce Project
      Copyright 2019 ExtendedUI
-     Copyright 2020 SynthOS
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -69,6 +68,7 @@
             android:layout_marginTop="@dimen/volume_dialog_miui_row_icon_margintop"
             android:tint="@android:color/white"
             android:clickable="false"
+            android:visibility="gone"
             android:soundEffectsEnabled="false" />
 
         <co.potatoproject.plugin.volume.common.AlphaOptimizedImageButton
@@ -78,10 +78,11 @@
             android:layout_width="@dimen/volume_dialog_tap_target_app_size"
             android:layout_height="@dimen/volume_dialog_tap_target_app_size"
             android:background="@drawable/ripple_drawable_20dp"
-            android:layout_marginBottom="@dimen/volume_dialog_row_margin_bottom"
-            android:padding="@dimen/volume_row_app_icon_padding"
-            android:soundEffectsEnabled="false"
-            android:scaleType="centerInside" />
+            android:layout_marginTop="@dimen/volume_dialog_app_row_icon_margintop"
+            android:paddingStart="@dimen/volume_row_app_icon_padding"
+            android:paddingEnd="@dimen/volume_row_app_icon_padding"
+            android:scaleType="fitXY"
+            android:soundEffectsEnabled="false"/>
     </LinearLayout>
 
     <include layout="@layout/volume_dnd_icon_miui"/>
