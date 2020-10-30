@@ -1167,6 +1167,17 @@ public class VolumeDialogImpl implements VolumeDialog {
         }
     }
 
+    private Boolean isThemeDark(Context context) {
+        switch (mContext.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
+    }
+
     protected void updateRingerH() {
         if (mState != null) {
             final StreamState ss = mState.states.get(AudioManager.STREAM_RING);
@@ -1174,7 +1185,14 @@ public class VolumeDialogImpl implements VolumeDialog {
                 return;
             }
 
-            ColorStateList ringerbackgroundnormal = mContext.getResources().getColorStateList(R.color.ringer_bcg_normal);
+            ColorStateList ringerbackgroundnormal;
+            if (!isThemeDark(mContext)) {
+                 ringerbackgroundnormal  = mContext.getResources().getColorStateList(
+                     android.R.color.white);
+            } else {
+                 ringerbackgroundnormal  = mContext.getResources().getColorStateList(
+                     com.android.internal.R.color.background_floating_device_default_dark);
+            }
             int RingerMuteT = mContext.getResources().getColor(R.color.ringer_icon_mute);
             int RingerNormalT = mContext.getResources().getColor(R.color.ringer_icon_normal);
 
