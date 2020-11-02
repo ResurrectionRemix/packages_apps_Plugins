@@ -360,6 +360,8 @@ public class VolumeDialogImpl implements VolumeDialog {
             if (!AudioSystem.isSingleVolume(mContext)) {
                 addRow(AudioManager.STREAM_RING,
                         mSysUIR.drawable("ic_volume_ringer"), mSysUIR.drawable("ic_volume_ringer_mute"), true, false);
+                addRow(AudioManager.STREAM_NOTIFICATION,
+                        mSysUIR.drawable("ic_volume_notification"), mSysUIR.drawable("ic_volume_notification_mute"), true, false);
                 addRow(STREAM_ALARM,
                         mSysUIR.drawable("ic_volume_alarm"), mSysUIR.drawable("ic_volume_alarm_mute"), true, false);
                 addRow(AudioManager.STREAM_VOICE_CALL,
